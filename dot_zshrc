@@ -1,0 +1,51 @@
+export EDITOR="nvim"
+export VISUAL="nvim"
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#363A4F,bg:#24273A,spinner:#F4DBD6,hl:#ED8796 \
+--color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
+--color=marker:#B7BDF8,fg+:#CAD3F5,prompt:#C6A0F6,hl+:#ED8796 \
+--color=selected-bg:#494D64 \
+--color=border:#6E738D,label:#CAD3F5"
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE 
+setopt SHARE_HISTORY
+
+setopt AUTO_CD
+setopt INTERACTIVE_COMMENTS
+
+autoload -Uz compinit
+compinit
+
+zstyle ":completion:*" menu select
+zstyle ":completion:*" matcher-list "m:{a-zA-Z}={A-Za-z}"
+zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"
+
+bindkey -e
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[3~" delete-char
+
+alias nvm="fnm"
+alias cd="z"
+alias cat="bat"
+alias ls="eza --icons=always --group-directories-first"
+alias -g -- --help="--help 2>&1 | bat --language=help --style=plain"
+alias lazygit="lazygit --use-config-file=$XDG_CONFIG_HOME/lazygit/themes/macchiato/blue.yml"
+alias lg="lazygit"
+alias ..="cd .."
+alias ...="cd ../.."
+
+# Plugins
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+eval "$(fnm env --use-on-cd --shell zsh)"
+eval "$(zoxide init zsh)"
+
+eval "$(starship init zsh)"
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
